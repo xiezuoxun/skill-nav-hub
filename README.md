@@ -54,16 +54,35 @@ Source 选 **Deploy from a branch** → Branch 选 **main** → 目录选 **/(ro
 
 ## 更新导航台内容
 
-源码数据在 `index.html` 内的 `SKILLS` 数组。新增 / 修改工具后：
+### ⚠️ 不会自动同步（重要）
 
-```bash
-git add index.html
-git commit -m "更新：新增 xxx 工具"
-git push
-```
+GitHub Pages 是**静态托管**：仓库文件不变，线上页面就不会变。
+而且导航台的源文件在 WorkBuddy 沙箱里生成，**沙箱出网受限 + 没有你的 GitHub 凭证**，
+所以 AI 改完本地 `index.html` 后，**无法替你自动 push 到 GitHub**。
 
-> 注：页面「+添加」写入的是浏览器本地（localStorage），不会进源码；
-> 要正式入册需把条目写进 `SKILLS` 数组后提交推送。
+结论：**以后让我「更新导航台」不会自动同步到线上**，需要你本机做一次重新推送（半自动）。
+
+### 半自动更新流程
+
+1. 你让我加 / 改某个 skill → AI 在本地 `index.html` 改好（含静态卡片）→ 把文件交给你；
+2. 你用下面任一种方式把最新 `index.html` 推上去（二选一）：
+
+   **方式 A · 命令行（Git Bash / PowerShell / CMD 均可）**
+   ```bash
+   cd C:/Users/lenovo/WorkBuddy/2026-10-23-11-14-11/skill-nav-hub
+   git add index.html
+   git commit -m "更新：新增 xxx 工具"
+   git push
+   ```
+
+   **方式 B · GitHub Desktop（全程鼠标，不用命令行）**
+   打开 GitHub Desktop → 选中 skill-nav-hub 仓库 → 它会自动识别改动 →
+   写一句摘要 → 点 **Push origin** 即可。
+
+3. 推送后约 1–2 分钟，`https://xiezuoxun.github.io/skill-nav-hub/` 自动生效。
+
+> 注：页面「+添加」写入的是浏览器本地（localStorage），不会进源码、也不会跨设备同步；
+> 要正式入册并同步到线上，必须把条目写进 `index.html` 的静态卡片后提交推送。
 
 ## 文件说明
 
