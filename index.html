@@ -180,9 +180,10 @@ var state = { kw:"", cat:"all", scene:null };
 function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g, function(c){
   return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
 function catName(id){ for(var i=0;i<CATS.length;i++){ if(CATS[i].id===id) return CATS[i].name; } return id; }
-function loadCustom(){ try{ return JSON.parse(localStorage.getItem(CUSTOM_KEY)||"[]"); }catch(e){ return []; } }
+function loadArr(key){ try{ var v = JSON.parse(localStorage.getItem(key)||"[]"); return Array.isArray(v) ? v : []; }catch(e){ return []; } }
+function loadCustom(){ return loadArr(CUSTOM_KEY); }
 function saveCustom(a){ localStorage.setItem(CUSTOM_KEY, JSON.stringify(a)); }
-function loadFav(){ try{ return JSON.parse(localStorage.getItem(FAV_KEY)||"[]"); }catch(e){ return []; } }
+function loadFav(){ return loadArr(FAV_KEY); }
 function saveFav(a){ localStorage.setItem(FAV_KEY, JSON.stringify(a)); }
 function isFav(n){ return loadFav().indexOf(n) >= 0; }
 function allSkills(){ return SKILLS.concat(loadCustom().map(function(x){ return x; })); }
