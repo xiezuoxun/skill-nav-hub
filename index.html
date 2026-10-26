@@ -353,10 +353,22 @@ function importJSON(e){
 }
 
 // ---- 初始化（单向：加载 -> 绑定 -> 统一刷新） ----
-window.addEventListener("DOMContentLoaded", function(){
-  bind();
-  refreshAll();
-});
+function boot(){
+  try {
+    bind();
+    refreshAll();
+  } catch(err){
+    var g = document.getElementById("grid");
+    if(g){ g.innerHTML = '<div class="empty">初始化出错：' + (err && err.message ? err.message : String(err)) + '</div>'; }
+    if(typeof console !== "undefined" && console.error){ console.error(err); }
+  }
+}
+// 兼容各种加载方式：webview/srcdoc 下 DOMContentLoaded 可能不触发，故按 readyState 兜底
+if(document.readyState === "loading"){
+  document.addEventListener("DOMContentLoaded", boot);
+} else {
+  boot();
+}
 </script>
 </body>
 </html>
